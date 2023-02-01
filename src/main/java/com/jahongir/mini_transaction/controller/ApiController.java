@@ -1,6 +1,6 @@
 package com.jahongir.mini_transaction.controller;
 
-import com.jahongir.mini_transaction.service.BaseService;
+import com.jahongir.mini_transaction.service.base.BaseService;
 import lombok.RequiredArgsConstructor;
 
 /**

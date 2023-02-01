@@ -11,5 +11,5 @@ import java.util.UUID;
  * @project Mini_transaction/IntelliJ IDEA
  */
 
-public interface UserRepository extends JpaRepository<User, UUID> {
+public interface UserRepository extends JpaRepository<User, UUID>, GenericRepository {
 }

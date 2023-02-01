@@ -9,5 +9,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * @project Mini_transaction/IntelliJ IDEA
  */
 
-public interface RateRepository extends JpaRepository<Rate, Long> {
+public interface RateRepository extends JpaRepository<Rate, Long>, GenericRepository {
 }

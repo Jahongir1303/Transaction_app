@@ -1,4 +1,4 @@
-package com.jahongir.mini_transaction.service;
+package com.jahongir.mini_transaction.service.base;
 
 /**
  * @author jahongir
