@@ -28,5 +28,5 @@ public class User {
     @Column(nullable = false, columnDefinition = "TEXT")
     private String password;
     @OneToMany(mappedBy = "user")
-    private List<Card> cards;
+    private List<Card> cardList;
 }

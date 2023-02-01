@@ -1,13 +1,8 @@
 package com.jahongir.mini_transaction.domains;
 
 import com.jahongir.mini_transaction.enums.TransactionStat;
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import lombok.*;
-
-import java.sql.Timestamp;
-import java.util.Locale;
 import java.util.UUID;
 
 /**
@@ -31,13 +26,13 @@ public class Transaction {
     private Long senderCardId;
     @Column(nullable = false)
     private Long receiverCardId;
-    @Nonnull
+    @Column(nullable = false)
     private Long senderAmount;
-    @Nonnull
+    @Column(nullable = false)
     private Long receiverAmount;
     @Enumerated(EnumType.STRING)
     @Column(length = 10)
     private TransactionStat status;
     @Column(nullable = false)
-    private Timestamp timestamp;
+    private Long time;
 }
