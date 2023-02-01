@@ -16,10 +16,9 @@ public class MiniTransactionApplication {
     @Bean
     CommandLineRunner commandLineRunner(UserRepository userRepository) {
         return args -> {
-            User user = User.builder()
-                    .password("7777")
-                    .phoneNumber("+998946311303")
-                    .build();
+            User user = new User();
+            user.setPassword("7777");
+            user.setPhoneNumber("+998946311303");
             userRepository.save(user);
         };
     }

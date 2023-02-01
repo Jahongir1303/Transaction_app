@@ -1,5 +1,6 @@
 package com.jahongir.mini_transaction.domains;
 
+import com.jahongir.mini_transaction.enums.UserStatus;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -27,6 +28,10 @@ public class User {
     private String phoneNumber;
     @Column(nullable = false, columnDefinition = "TEXT")
     private String password;
+    @Enumerated(EnumType.STRING)
+    @Column(length = 10)
+    @Builder.Default
+    private UserStatus status = UserStatus.ACTIVE;
     @OneToMany(mappedBy = "user")
     private List<Card> cardList;
 }

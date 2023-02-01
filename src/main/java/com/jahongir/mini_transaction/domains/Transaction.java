@@ -34,5 +34,6 @@ public class Transaction {
     @Column(length = 10)
     private TransactionStat status;
     @Column(nullable = false)
-    private Long time;
+    @Builder.Default
+    private Long time = System.currentTimeMillis();
 }
