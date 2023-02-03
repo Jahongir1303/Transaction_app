@@ -1,5 +1,6 @@
 package com.jahongir.mini_transaction.domains;
 
+import com.jahongir.mini_transaction.enums.CurrencyType;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -22,8 +23,10 @@ public class Rate {
     @SequenceGenerator(name = "rate_id_seq_gen", sequenceName = "rate_id_sequence", allocationSize = 1)
     private Long id;
     @Column(length = 10)
-    private String fromCurrency;
+    @Enumerated(EnumType.STRING)
+    private CurrencyType fromCurrency;
     @Column(length = 10)
-    private String toCurrency;
+    @Enumerated(EnumType.STRING)
+    private CurrencyType toCurrency;
     private Long rate;
 }

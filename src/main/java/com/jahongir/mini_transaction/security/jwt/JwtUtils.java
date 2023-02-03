@@ -24,14 +24,18 @@ public class JwtUtils {
     @Value("${tune.app.jwtExpirationMs}")
     private int jwtExpirationMs;
 
-    public String generateJwtToken(Authentication authentication) {
-        UserDetailsImpl userPrincipal = (UserDetailsImpl) authentication.getPrincipal();
+    public String generateTokenFromPhoneNumber(String phoneNumber) {
         return Jwts.builder()
-                .setSubject(userPrincipal.getUsername())
+                .setSubject(phoneNumber)
                 .setIssuedAt(new Date())
                 .setExpiration(new Date((new Date()).getTime() + jwtExpirationMs))
                 .signWith(SignatureAlgorithm.HS512, jwtSecret)
                 .compact();
+    }
+
+
+    public String generateJwtToken(UserDetailsImpl userPrincipal) {
+        return generateTokenFromPhoneNumber(userPrincipal.getUsername());
     }
 
     public String getPhoneNumberFromJwtToken(String token) {

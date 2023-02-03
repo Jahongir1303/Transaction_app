@@ -3,6 +3,7 @@ package com.jahongir.mini_transaction.security;
 import com.jahongir.mini_transaction.domains.User;
 import com.jahongir.mini_transaction.enums.UserStatus;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -15,6 +16,7 @@ import java.util.UUID;
  * @project Mini_transaction/IntelliJ IDEA
  */
 @AllArgsConstructor
+@Getter
 public class UserDetailsImpl implements UserDetails {
     private static final long serialVersionUID = 1L;
     private UUID id;

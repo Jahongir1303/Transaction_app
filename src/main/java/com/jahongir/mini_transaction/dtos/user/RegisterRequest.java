@@ -1,11 +1,10 @@
-package com.jahongir.mini_transaction.dtos;
+package com.jahongir.mini_transaction.dtos.user;
 
-import com.jahongir.mini_transaction.dtos.base.Dto;
 import lombok.*;
 
 /**
  * @author jahongir
- * @created 02/02/23 - 01:02
+ * @created 02/02/23 - 15:07
  * @project Mini_transaction/IntelliJ IDEA
  */
 @AllArgsConstructor
@@ -13,7 +12,8 @@ import lombok.*;
 @Getter
 @Setter
 @ToString
-public class AuthDto implements Dto {
+public class RegisterRequest {
     private String phoneNumber;
     private String password;
+    private String passwordConfirm;
 }
