@@ -1,5 +1,6 @@
 package com.jahongir.mini_transaction.dtos.jwt;
 
+import com.jahongir.mini_transaction.dtos.base.Dto;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -14,7 +15,7 @@ import java.util.UUID;
 @Getter
 @Setter
 @ToString
-public class JwtResponse {
+public class JwtResponse implements Dto {
     private String token;
     private final String type = "Bearer";
     private String refreshToken;

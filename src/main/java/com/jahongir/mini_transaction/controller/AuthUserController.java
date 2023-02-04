@@ -8,6 +8,7 @@ import com.jahongir.mini_transaction.dtos.user.RegisterRequest;
 import com.jahongir.mini_transaction.service.RefreshTokenService;
 import com.jahongir.mini_transaction.service.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -38,7 +39,7 @@ public class AuthUserController extends ApiController<UserDetailsServiceImpl> {
 
     @PostMapping(value = API + V1 + "/user/register")
     public ResponseEntity<UUID> register(@RequestBody RegisterRequest registerRequest) {
-        return service.register(registerRequest);
+        return ResponseEntity.status(HttpStatus.CREATED).body(service.create(registerRequest));
     }
 
     @PostMapping(value = API + V1 + "/refreshtoken")

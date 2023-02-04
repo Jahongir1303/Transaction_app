@@ -12,6 +12,7 @@ import com.jahongir.mini_transaction.security.UserDetailsImpl;
 import com.jahongir.mini_transaction.security.jwt.JwtUtils;
 import com.jahongir.mini_transaction.service.base.AbstractService;
 import com.jahongir.mini_transaction.service.base.BaseService;
+import com.jahongir.mini_transaction.service.base.GenericCreateService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -34,7 +35,7 @@ import java.util.UUID;
  * @project Mini_transaction/IntelliJ IDEA
  */
 @Service
-public class UserDetailsServiceImpl extends AbstractService<UserRepository, UserMapper> implements UserDetailsService, BaseService {
+public class UserDetailsServiceImpl extends AbstractService<UserRepository, UserMapper> implements UserDetailsService, GenericCreateService<UUID, RegisterRequest> {
     @Autowired
     private AuthenticationManager authenticationManager;
     @Autowired
@@ -74,7 +75,9 @@ public class UserDetailsServiceImpl extends AbstractService<UserRepository, User
         );
     }
 
-    public ResponseEntity<UUID> register(RegisterRequest registerRequest) {
+
+    @Override
+    public UUID create(RegisterRequest registerRequest) {
         if (repository.existsByPhoneNumber(registerRequest.getPhoneNumber())) {
             throw new GenericRunTimeException("Error: User has already exists with phone number: " + registerRequest.getPhoneNumber(), HttpStatus.BAD_REQUEST.value());
         }
@@ -86,6 +89,6 @@ public class UserDetailsServiceImpl extends AbstractService<UserRepository, User
                 .password(passwordEncoder.encode(registerRequest.getPassword()))
                 .build();
         repository.save(user);
-        return ResponseEntity.status(HttpStatus.CREATED).body(user.getId());
+        return user.getId();
     }
 }

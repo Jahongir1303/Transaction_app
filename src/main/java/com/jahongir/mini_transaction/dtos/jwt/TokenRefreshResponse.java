@@ -1,5 +1,6 @@
 package com.jahongir.mini_transaction.dtos.jwt;
 
+import com.jahongir.mini_transaction.dtos.base.Dto;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -10,7 +11,7 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-public class TokenRefreshResponse {
+public class TokenRefreshResponse implements Dto {
     private String accessToken;
     private String refreshToken;
     private String tokenType = "Bearer";

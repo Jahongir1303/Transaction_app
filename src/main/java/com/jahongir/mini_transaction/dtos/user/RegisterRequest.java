@@ -1,5 +1,6 @@
 package com.jahongir.mini_transaction.dtos.user;
 
+import com.jahongir.mini_transaction.dtos.base.Dto;
 import lombok.*;
 
 /**
@@ -12,7 +13,7 @@ import lombok.*;
 @Getter
 @Setter
 @ToString
-public class RegisterRequest {
+public class RegisterRequest implements Dto {
     private String phoneNumber;
     private String password;
     private String passwordConfirm;
