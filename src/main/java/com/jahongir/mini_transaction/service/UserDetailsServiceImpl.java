@@ -62,16 +62,15 @@ public class UserDetailsServiceImpl extends AbstractService<UserRepository, User
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
         UserDetailsImpl principal = (UserDetailsImpl) authentication.getPrincipal();
+
         String jwt = jwtUtils.generateJwtToken(principal);
 
-        UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
-
-        RefreshToken refreshToken = refreshTokenService.createRefreshToken(userDetails.getId());
+        RefreshToken refreshToken = refreshTokenService.createRefreshToken(principal.getId());
 
         return new JwtResponse(jwt,
                 refreshToken.getToken(),
-                userDetails.getId(),
-                userDetails.getUsername()
+                principal.getId(),
+                principal.getUsername()
         );
     }
 

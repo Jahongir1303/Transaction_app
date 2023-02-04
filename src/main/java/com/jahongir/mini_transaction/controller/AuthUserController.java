@@ -1,9 +1,13 @@
 package com.jahongir.mini_transaction.controller;
 
+import com.jahongir.mini_transaction.dtos.jwt.TokenRefreshRequest;
+import com.jahongir.mini_transaction.dtos.jwt.TokenRefreshResponse;
 import com.jahongir.mini_transaction.dtos.user.LoginRequest;
 import com.jahongir.mini_transaction.dtos.jwt.JwtResponse;
 import com.jahongir.mini_transaction.dtos.user.RegisterRequest;
+import com.jahongir.mini_transaction.service.RefreshTokenService;
 import com.jahongir.mini_transaction.service.UserDetailsServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,8 +23,11 @@ import java.util.UUID;
  */
 @RestController
 @CrossOrigin(origins = "*", maxAge = 3600)
-public class UserController extends ApiController<UserDetailsServiceImpl> {
-    public UserController(UserDetailsServiceImpl service) {
+public class AuthUserController extends ApiController<UserDetailsServiceImpl> {
+    @Autowired
+    RefreshTokenService refreshTokenService;
+
+    public AuthUserController(UserDetailsServiceImpl service) {
         super(service);
     }
 
@@ -29,7 +36,13 @@ public class UserController extends ApiController<UserDetailsServiceImpl> {
         return ResponseEntity.ok(service.login(loginRequest));
     }
 
+    @PostMapping(value = API + V1 + "/user/register")
     public ResponseEntity<UUID> register(@RequestBody RegisterRequest registerRequest) {
         return service.register(registerRequest);
+    }
+
+    @PostMapping(value = API + V1 + "/refreshtoken")
+    public ResponseEntity<TokenRefreshResponse> refreshToken(@RequestBody TokenRefreshRequest tokenRefreshRequest) {
+        return refreshTokenService.refreshToken(tokenRefreshRequest);
     }
 }

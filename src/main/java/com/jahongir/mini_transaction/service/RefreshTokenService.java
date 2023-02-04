@@ -1,12 +1,16 @@
 package com.jahongir.mini_transaction.service;
 
 import com.jahongir.mini_transaction.domains.RefreshToken;
+import com.jahongir.mini_transaction.dtos.jwt.TokenRefreshRequest;
+import com.jahongir.mini_transaction.dtos.jwt.TokenRefreshResponse;
 import com.jahongir.mini_transaction.exceptions.TokenRefreshException;
 import com.jahongir.mini_transaction.repository.RefreshTokenRepository;
 import com.jahongir.mini_transaction.repository.UserRepository;
 
+import com.jahongir.mini_transaction.security.jwt.JwtUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -29,6 +33,8 @@ public class RefreshTokenService {
 
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private JwtUtils jwtUtils;
 
     public Optional<RefreshToken> findByToken(String token) {
         return refreshTokenRepository.findByToken(token);
@@ -57,5 +63,19 @@ public class RefreshTokenService {
     @Transactional
     public int deleteByUserId(UUID userId) {
         return refreshTokenRepository.deleteByUser(userRepository.findById(userId).get());
+    }
+
+    public ResponseEntity<TokenRefreshResponse> refreshToken(TokenRefreshRequest tokenRefreshRequest) {
+        String requestRefreshToken = tokenRefreshRequest.getRefreshToken();
+
+        return findByToken(requestRefreshToken)
+                .map(this::verifyExpiration)
+                .map(RefreshToken::getUser)
+                .map(user -> {
+                    String token = jwtUtils.generateTokenFromPhoneNumber(user.getPhoneNumber());
+                    return ResponseEntity.ok(new TokenRefreshResponse(token, requestRefreshToken));
+                })
+                .orElseThrow(() -> new TokenRefreshException(requestRefreshToken,
+                        "Refresh token is not in database!"));
     }
 }
