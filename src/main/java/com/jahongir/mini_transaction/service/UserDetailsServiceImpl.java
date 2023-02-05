@@ -6,6 +6,7 @@ import com.jahongir.mini_transaction.domains.User;
 import com.jahongir.mini_transaction.dtos.jwt.JwtResponse;
 import com.jahongir.mini_transaction.dtos.user.LoginRequest;
 import com.jahongir.mini_transaction.dtos.user.RegisterRequest;
+import com.jahongir.mini_transaction.enums.UserStatus;
 import com.jahongir.mini_transaction.exceptions.GenericRunTimeException;
 
 import com.jahongir.mini_transaction.mappers.UserMapper;
@@ -22,6 +23,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -29,6 +32,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
+import java.util.Locale;
 import java.util.UUID;
 
 /**
@@ -91,5 +96,22 @@ public class UserDetailsServiceImpl extends AbstractService<UserRepository, User
         repository.save(user);
 
         return user.getId();
+    }
+
+    public void deleteUserByPhoneNumber(String phoneNumber) {
+        SecurityContext context = SecurityContextHolder.getContext();
+        Authentication authentication = context.getAuthentication();
+        UserDetailsImpl principal = (UserDetailsImpl) authentication.getPrincipal();
+        if (!principal.getPhoneNumber().equals(phoneNumber)) {
+            throw new GenericRunTimeException("Wrong phone number!", HttpStatus.BAD_REQUEST.value());
+        }
+        User user = User.builder()
+                .id(principal.getId())
+                .phoneNumber(phoneNumber)
+                .password(principal.getPassword())
+                .status(UserStatus.DELETED)
+                .build();
+
+        repository.save(user);
     }
 }

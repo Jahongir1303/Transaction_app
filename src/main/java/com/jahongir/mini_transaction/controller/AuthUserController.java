@@ -10,10 +10,7 @@ import com.jahongir.mini_transaction.service.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
 
@@ -23,7 +20,6 @@ import java.util.UUID;
  * @project Mini_transaction/IntelliJ IDEA
  */
 @RestController
-//@CrossOrigin(origins = "*", maxAge = 3600)
 public class AuthUserController extends ApiController<UserDetailsServiceImpl> {
     @Autowired
     RefreshTokenService refreshTokenService;
@@ -45,5 +41,11 @@ public class AuthUserController extends ApiController<UserDetailsServiceImpl> {
     @PostMapping(value = API + V1 + "/refreshtoken")
     public ResponseEntity<TokenRefreshResponse> refreshToken(@RequestBody TokenRefreshRequest tokenRefreshRequest) {
         return refreshTokenService.refreshToken(tokenRefreshRequest);
+    }
+
+    @PostMapping(value = API + V1 + "/user/delete/{phoneNumber}")
+    @ResponseStatus(HttpStatus.OK)
+    public void delete(@PathVariable("phoneNumber") String phoneNumber) {
+        service.deleteUserByPhoneNumber(phoneNumber);
     }
 }
