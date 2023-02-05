@@ -2,8 +2,8 @@ package com.jahongir.mini_transaction.mappers;
 
 import com.jahongir.mini_transaction.domains.User;
 import com.jahongir.mini_transaction.dtos.user.RegisterRequest;
-import com.jahongir.mini_transaction.mappers.config.EncodedMapping;
-import com.jahongir.mini_transaction.mappers.config.PasswordEncoderMapper;
+import com.jahongir.mini_transaction.mappers.mapper_config.EncodedMapping;
+import com.jahongir.mini_transaction.mappers.mapper_config.PasswordEncoderMapper;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 

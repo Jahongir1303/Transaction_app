@@ -1,4 +1,4 @@
-package com.jahongir.mini_transaction.mappers.config;
+package com.jahongir.mini_transaction.mappers.mapper_config;
 
 
 import org.mapstruct.Qualifier;
