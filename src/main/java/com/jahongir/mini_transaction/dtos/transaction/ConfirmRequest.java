@@ -2,6 +2,8 @@ package com.jahongir.mini_transaction.dtos.transaction;
 
 import lombok.*;
 
+import java.util.UUID;
+
 /**
  * @author jahongir
  * @created 05/02/23 - 15:39
@@ -13,5 +15,5 @@ import lombok.*;
 @Setter
 @ToString
 public class ConfirmRequest {
-    private Long transactionId;
+    private UUID transactionId;
 }
