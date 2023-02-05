@@ -6,6 +6,7 @@ import com.jahongir.mini_transaction.service.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -30,6 +31,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 //@EnableWebSecurity
 public class WebSecurityConfig {
     @Autowired
+    @Lazy
     UserDetailsServiceImpl userDetailsService;
     @Autowired
     private AuthEntryPointJwt unauthorizedHandler;
@@ -84,13 +86,13 @@ public class WebSecurityConfig {
                 .disable()
                 .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
                 .authorizeHttpRequests().requestMatchers
-                ("/swagger-ui/*",
-                        "/swagger-resources/**",
-                        "/v3/api-docs/**",
-                        "/webjars/**",
-                        "/api/v1/user/register",
-                        "/api/v1/user/login",
-                        "/api/v1/user/refreshtoken")
+                        ("/swagger-ui/*",
+                                "/swagger-resources/**",
+                                "/v3/api-docs/**",
+                                "/webjars/**",
+                                "/api/v1/user/register",
+                                "/api/v1/user/login",
+                                "/api/v1/user/refreshtoken")
                 .permitAll()
                 .anyRequest()
                 .authenticated()

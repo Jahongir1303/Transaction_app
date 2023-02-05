@@ -13,4 +13,6 @@ import lombok.Setter;
 @Setter
 public class TokenRefreshRequest implements Dto {
     private String refreshToken;
+
+
 }

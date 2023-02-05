@@ -10,5 +10,6 @@ import org.mapstruct.Mapper;
  * @project Mini_transaction/IntelliJ IDEA
  */
 @Mapper(componentModel = "spring")
-public interface TransactionMapper extends GenericMapper<Transaction, HoldRequest> {
+public interface TransactionMapper extends BaseMapper{
+
 }

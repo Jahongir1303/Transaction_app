@@ -28,4 +28,5 @@ public class JwtResponse implements Dto {
         this.id = id;
         this.phoneNumber = phoneNumber;
     }
+
 }

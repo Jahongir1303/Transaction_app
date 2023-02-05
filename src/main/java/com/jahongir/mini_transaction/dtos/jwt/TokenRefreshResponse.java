@@ -20,4 +20,5 @@ public class TokenRefreshResponse implements Dto {
         this.accessToken = accessToken;
         this.refreshToken = refreshToken;
     }
+
 }

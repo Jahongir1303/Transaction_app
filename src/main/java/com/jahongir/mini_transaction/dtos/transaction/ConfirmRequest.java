@@ -9,8 +9,7 @@ import java.util.UUID;
  * @created 05/02/23 - 15:39
  * @project Mini_transaction/IntelliJ IDEA
  */
-@AllArgsConstructor
-@NoArgsConstructor
+
 @Getter
 @Setter
 @ToString

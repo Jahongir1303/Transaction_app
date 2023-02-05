@@ -42,16 +42,19 @@ public class UserDetailsServiceImpl extends AbstractService<UserRepository, User
     @Lazy
     private AuthenticationManager authenticationManager;
     @Autowired
-    @Lazy
-    private PasswordEncoder passwordEncoder;
+    private UserMapper userMapper;
+//    @Autowired
+//    @Lazy
+//    private PasswordEncoder passwordEncoder;
     @Autowired
     private JwtUtils jwtUtils;
     @Autowired
     RefreshTokenService refreshTokenService;
 
-    public UserDetailsServiceImpl(UserRepository repository, UserMapper mapper) {
-        super(repository, mapper);
+    public UserDetailsServiceImpl(UserRepository repository, UserMapper userMapper) {
+        super(repository, userMapper);
     }
+
 
     @Override
     @Transactional
@@ -88,7 +91,7 @@ public class UserDetailsServiceImpl extends AbstractService<UserRepository, User
             throw new GenericRunTimeException("Error: Password are not the same" + registerRequest.getPhoneNumber(), HttpStatus.BAD_REQUEST.value());
         }
 
-        User user = mapper.fromCreateDto(registerRequest);
+        User user = userMapper.fromCreateDto(registerRequest);
         System.out.println(user.getPassword() + " this is password");
 //        User user = User.builder()
 //                .phoneNumber(registerRequest.getPhoneNumber())
