@@ -3,6 +3,7 @@ package com.jahongir.mini_transaction.domains;
 import com.jahongir.mini_transaction.enums.TransactionStat;
 import jakarta.persistence.*;
 import lombok.*;
+
 import java.util.UUID;
 
 /**

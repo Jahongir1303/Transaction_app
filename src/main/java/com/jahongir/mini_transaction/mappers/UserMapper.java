@@ -3,8 +3,7 @@ package com.jahongir.mini_transaction.mappers;
 import com.jahongir.mini_transaction.domains.User;
 import com.jahongir.mini_transaction.dtos.user.RegisterRequest;
 import org.mapstruct.Mapper;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+
 
 /**
  * @author jahongir

@@ -88,12 +88,12 @@ public class UserDetailsServiceImpl extends AbstractService<UserRepository, User
             throw new GenericRunTimeException("Error: Password are not the same" + registerRequest.getPhoneNumber(), HttpStatus.BAD_REQUEST.value());
         }
 
-//        User user = mapper.fromCreateDto(registerRequest);
-//
-        User user = User.builder()
-                .phoneNumber(registerRequest.getPhoneNumber())
-                .password(passwordEncoder.encode(registerRequest.getPassword()))
-                .build();
+        User user = mapper.fromCreateDto(registerRequest);
+        System.out.println(user.getPassword() + " this is password");
+//        User user = User.builder()
+//                .phoneNumber(registerRequest.getPhoneNumber())
+//                .password(passwordEncoder.encode(registerRequest.getPassword()))
+//                .build();
         repository.save(user);
         return user.getId();
     }

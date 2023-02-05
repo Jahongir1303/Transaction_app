@@ -38,10 +38,6 @@ public class WebSecurityConfig {
     public AuthTokenFilter authenticationJwtTokenFilter() {
         return new AuthTokenFilter();
     }
-    @Bean
-    public WebSecurityCustomizer webSecurityCustomizer() {
-        return (web) -> web.ignoring().requestMatchers("/js/**", "/images/**","/resources/**");
-    }
 
     @Bean
     public DaoAuthenticationProvider authenticationProvider() {
@@ -88,9 +84,7 @@ public class WebSecurityConfig {
                 .disable()
                 .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
                 .authorizeHttpRequests().requestMatchers
-                (           "/swagger-ui/index.html",
-                        "/swagger-resources/configuration/security",
-                        "/swagger-ui/*",
+                ("/swagger-ui/*",
                         "/swagger-resources/**",
                         "/v3/api-docs/**",
                         "/webjars/**",
