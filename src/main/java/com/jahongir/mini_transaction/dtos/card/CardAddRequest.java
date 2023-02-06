@@ -8,10 +8,10 @@ import lombok.*;
  * @created 05/02/23 - 15:50
  * @project Mini_transaction/IntelliJ IDEA
  */
-//@AllArgsConstructor
-//@NoArgsConstructor
 @Getter
 @Setter
-public class CardCreateDTO implements Dto {
-
+public class CardAddRequest implements Dto {
+    private Long balance;
+    private String name;
+    private String cardNumber;
 }

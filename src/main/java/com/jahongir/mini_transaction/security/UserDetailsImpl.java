@@ -8,7 +8,6 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
-import java.util.UUID;
 
 /**
  * @author jahongir
@@ -19,14 +18,15 @@ import java.util.UUID;
 @Getter
 public class UserDetailsImpl implements UserDetails {
     private static final long serialVersionUID = 1L;
-    private UUID id;
-    private String phoneNumber;
-    private String password;
-    private UserStatus status;
+    //    private UUID id;
+//    private String phoneNumber;
+//    private String password;
+//    private UserStatus status;
+    private final User user;
 
-    public static UserDetailsImpl build(User user) {
-        return new UserDetailsImpl(user.getId(), user.getPhoneNumber(), user.getPassword(), user.getStatus());
-    }
+//    public static UserDetailsImpl build(User user) {
+//        return new UserDetailsImpl(user.getId(), user.getPhoneNumber(), user.getPassword(), user.getStatus());
+//    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -35,12 +35,12 @@ public class UserDetailsImpl implements UserDetails {
 
     @Override
     public String getPassword() {
-        return password;
+        return user.getPassword();
     }
 
     @Override
     public String getUsername() {
-        return phoneNumber;
+        return user.getPhoneNumber();
     }
 
     @Override
@@ -60,6 +60,6 @@ public class UserDetailsImpl implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return getStatus().equals(UserStatus.ACTIVE);
+        return user.getStatus().equals(UserStatus.ACTIVE);
     }
 }

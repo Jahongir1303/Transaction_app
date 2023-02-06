@@ -57,7 +57,7 @@ public class UserDetailsServiceImpl extends AbstractService<UserRepository, User
     public UserDetails loadUserByUsername(String phoneNumber) throws UsernameNotFoundException {
         User user = repository.findUserByPhoneNumber(phoneNumber)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found with phone number: " + phoneNumber));
-        return UserDetailsImpl.build(user);
+        return new UserDetailsImpl(user);
     }
 
     public JwtResponse login(LoginRequest loginRequest) {
@@ -69,11 +69,11 @@ public class UserDetailsServiceImpl extends AbstractService<UserRepository, User
 
         String jwt = jwtUtils.generateJwtToken(principal);
 
-        RefreshToken refreshToken = refreshTokenService.createRefreshToken(principal.getId());
+        RefreshToken refreshToken = refreshTokenService.createRefreshToken(principal.getUser().getId());
 
         return new JwtResponse(jwt,
                 refreshToken.getToken(),
-                principal.getId(),
+                principal.getUser().getId(),
                 principal.getUsername()
         );
     }
@@ -98,11 +98,11 @@ public class UserDetailsServiceImpl extends AbstractService<UserRepository, User
         SecurityContext context = SecurityContextHolder.getContext();
         Authentication authentication = context.getAuthentication();
         UserDetailsImpl principal = (UserDetailsImpl) authentication.getPrincipal();
-        if (!principal.getPhoneNumber().equals(phoneNumber)) {
+        if (!principal.getUsername().equals(phoneNumber)) {
             throw new GenericRunTimeException("Wrong phone number!", HttpStatus.BAD_REQUEST.value());
         }
         User user = User.builder()
-                .id(principal.getId())
+                .id(principal.getUser().getId())
                 .phoneNumber(phoneNumber)
                 .password(principal.getPassword())
                 .status(UserStatus.DELETED)

@@ -1,7 +1,9 @@
 package com.jahongir.mini_transaction.controller;
 
-import com.jahongir.mini_transaction.dtos.card.CardCreateDTO;
+import com.jahongir.mini_transaction.dtos.card.CardAddRequest;
 import com.jahongir.mini_transaction.service.CardService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -16,10 +18,9 @@ public class CardController extends ApiController<CardService> {
         super(service);
     }
 
-//    @PostMapping(API + V1 + "/card/add")
-//    public Long add(@RequestBody CardCreateDTO cardCreateDTO) {
-//        return null;
-//    }
-
-
+    @PostMapping(API + V1 + "/card/add")
+    public ResponseEntity<Long> add(@RequestBody CardAddRequest cardAddRequest) {
+        Long cardId = service.create(cardAddRequest);
+        return ResponseEntity.status(HttpStatus.CREATED).body(cardId);
+    }
 }

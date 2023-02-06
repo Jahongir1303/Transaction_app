@@ -1,7 +1,7 @@
 package com.jahongir.mini_transaction.mappers;
 
 import com.jahongir.mini_transaction.domains.Card;
-import com.jahongir.mini_transaction.dtos.card.CardCreateDTO;
+import com.jahongir.mini_transaction.dtos.card.CardAddRequest;
 import org.mapstruct.Mapper;
 
 /**
@@ -10,6 +10,6 @@ import org.mapstruct.Mapper;
  * @project Mini_transaction/IntelliJ IDEA
  */
 @Mapper(componentModel = "spring")
-public interface CardMapper extends BaseMapper{
-
+public interface CardMapper extends BaseMapper {
+    Card fromCreateDto(CardAddRequest cardAddRequest);
 }

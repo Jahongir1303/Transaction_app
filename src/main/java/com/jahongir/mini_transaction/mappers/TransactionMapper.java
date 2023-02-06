@@ -1,7 +1,5 @@
 package com.jahongir.mini_transaction.mappers;
 
-import com.jahongir.mini_transaction.domains.Transaction;
-import com.jahongir.mini_transaction.dtos.transaction.HoldRequest;
 import org.mapstruct.Mapper;
 
 /**
