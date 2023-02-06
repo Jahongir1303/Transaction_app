@@ -1,6 +1,7 @@
 package com.jahongir.mini_transaction.dtos.jwt;
 
 import com.jahongir.mini_transaction.dtos.base.Dto;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -12,7 +13,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class TokenRefreshRequest implements Dto {
+    @NotBlank(message = "Refresh token must not be null or empty")
     private String refreshToken;
-
 
 }

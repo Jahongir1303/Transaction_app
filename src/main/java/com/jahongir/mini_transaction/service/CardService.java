@@ -1,7 +1,6 @@
 package com.jahongir.mini_transaction.service;
 
 import com.jahongir.mini_transaction.domains.Card;
-import com.jahongir.mini_transaction.domains.User;
 import com.jahongir.mini_transaction.dtos.card.CardAddRequest;
 import com.jahongir.mini_transaction.dtos.card.CardResponse;
 import com.jahongir.mini_transaction.enums.CardType;
@@ -65,5 +64,18 @@ public class CardService extends AbstractService<CardRepository, CardMapper> imp
             return Collections.emptyList();
         }
         return cardList;
+    }
+
+    public CardResponse getCardInfo(String cardNumber) {
+        CardResponse cardResponse;
+        Optional<Card> byCardNumber = repository.findByCardNumber(cardNumber);
+        if (byCardNumber.isPresent()) {
+            Card card = byCardNumber.get();
+
+            cardResponse = mapper.toInfoDto(card);
+        } else {
+            return null;
+        }
+        return cardResponse;
     }
 }

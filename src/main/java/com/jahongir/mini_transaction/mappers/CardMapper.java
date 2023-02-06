@@ -4,6 +4,7 @@ import com.jahongir.mini_transaction.domains.Card;
 import com.jahongir.mini_transaction.dtos.card.CardAddRequest;
 import com.jahongir.mini_transaction.dtos.card.CardResponse;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
 import java.util.List;
 
@@ -16,5 +17,9 @@ import java.util.List;
 public interface CardMapper extends BaseMapper {
     Card fromCreateDto(CardAddRequest cardAddRequest);
 
+    CardResponse toInfoDto(Card card);
+
     List<CardResponse> toDto(List<Card> card);
+
+
 }

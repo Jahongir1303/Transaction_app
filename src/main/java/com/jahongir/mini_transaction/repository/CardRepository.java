@@ -1,6 +1,7 @@
 package com.jahongir.mini_transaction.repository;
 
 import com.jahongir.mini_transaction.domains.Card;
+import com.jahongir.mini_transaction.dtos.card.CardResponse;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
@@ -17,4 +18,6 @@ public interface CardRepository extends JpaRepository<Card, Long>, GenericReposi
     Boolean existsByCardNumber(String cardNumber);
 
     Optional<List<Card>> findAllByUserId(UUID userId);
+
+    Optional<Card> findByCardNumber(String cardNumber);
 }
