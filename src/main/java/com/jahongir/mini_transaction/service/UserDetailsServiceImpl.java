@@ -3,7 +3,7 @@ package com.jahongir.mini_transaction.service;
 import com.jahongir.mini_transaction.domains.RefreshToken;
 import com.jahongir.mini_transaction.domains.User;
 
-import com.jahongir.mini_transaction.dtos.jwt.JwtResponse;
+import com.jahongir.mini_transaction.dtos.jwt.AccessTokenResponse;
 import com.jahongir.mini_transaction.dtos.user.LoginRequest;
 import com.jahongir.mini_transaction.dtos.user.RegisterRequest;
 import com.jahongir.mini_transaction.enums.UserStatus;
@@ -60,7 +60,7 @@ public class UserDetailsServiceImpl extends AbstractService<UserRepository, User
         return new UserDetailsImpl(user);
     }
 
-    public JwtResponse login(LoginRequest loginRequest) {
+    public AccessTokenResponse login(LoginRequest loginRequest) {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(loginRequest.getPhoneNumber(), loginRequest.getPassword()));
 
@@ -71,7 +71,7 @@ public class UserDetailsServiceImpl extends AbstractService<UserRepository, User
 
         RefreshToken refreshToken = refreshTokenService.createRefreshToken(principal.getUser().getId());
 
-        return new JwtResponse(jwt,
+        return new AccessTokenResponse(jwt,
                 refreshToken.getToken(),
                 principal.getUser().getId(),
                 principal.getUsername()

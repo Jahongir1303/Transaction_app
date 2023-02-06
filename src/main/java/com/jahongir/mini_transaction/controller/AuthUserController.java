@@ -3,7 +3,7 @@ package com.jahongir.mini_transaction.controller;
 import com.jahongir.mini_transaction.dtos.jwt.TokenRefreshRequest;
 import com.jahongir.mini_transaction.dtos.jwt.TokenRefreshResponse;
 import com.jahongir.mini_transaction.dtos.user.LoginRequest;
-import com.jahongir.mini_transaction.dtos.jwt.JwtResponse;
+import com.jahongir.mini_transaction.dtos.jwt.AccessTokenResponse;
 import com.jahongir.mini_transaction.dtos.user.RegisterRequest;
 import com.jahongir.mini_transaction.service.RefreshTokenService;
 import com.jahongir.mini_transaction.service.UserDetailsServiceImpl;
@@ -29,8 +29,8 @@ public class AuthUserController extends ApiController<UserDetailsServiceImpl> {
     }
 
     @PostMapping(value = API + V1 + "/user/login")
-    public ResponseEntity<JwtResponse> login(@RequestBody LoginRequest loginRequest) {
-        JwtResponse jwtResponse = service.login(loginRequest);
+    public ResponseEntity<AccessTokenResponse> login(@RequestBody LoginRequest loginRequest) {
+        AccessTokenResponse jwtResponse = service.login(loginRequest);
         return ResponseEntity.ok(jwtResponse);
     }
 

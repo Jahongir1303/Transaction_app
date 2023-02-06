@@ -2,7 +2,10 @@ package com.jahongir.mini_transaction.mappers;
 
 import com.jahongir.mini_transaction.domains.Card;
 import com.jahongir.mini_transaction.dtos.card.CardAddRequest;
+import com.jahongir.mini_transaction.dtos.card.CardResponse;
 import org.mapstruct.Mapper;
+
+import java.util.List;
 
 /**
  * @author jahongir
@@ -12,4 +15,6 @@ import org.mapstruct.Mapper;
 @Mapper(componentModel = "spring")
 public interface CardMapper extends BaseMapper {
     Card fromCreateDto(CardAddRequest cardAddRequest);
+
+    List<CardResponse> toDto(List<Card> card);
 }

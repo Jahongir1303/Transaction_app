@@ -15,14 +15,14 @@ import java.util.UUID;
 @Getter
 @Setter
 @ToString
-public class JwtResponse implements Dto {
+public class AccessTokenResponse implements Dto {
     private String token;
     private final String type = "Bearer";
     private String refreshToken;
     private UUID id;
     private String phoneNumber;
 
-    public JwtResponse(String token, String refreshToken, UUID id, String phoneNumber) {
+    public AccessTokenResponse(String token, String refreshToken, UUID id, String phoneNumber) {
         this.token = token;
         this.refreshToken = refreshToken;
         this.id = id;

@@ -1,5 +1,6 @@
 package com.jahongir.mini_transaction.dtos.card;
 
+import com.jahongir.mini_transaction.enums.CardType;
 import lombok.*;
 
 /**
@@ -9,6 +10,9 @@ import lombok.*;
  */
 @Getter
 @Setter
-public class CardDTO {
+public class CardResponse {
+    private Long balance;
+    private String name;
     private String cardNumber;
+    private CardType type;
 }
