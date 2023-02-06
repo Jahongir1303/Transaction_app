@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class PasswordEncoderMapper {
-    protected final PasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
 
     public PasswordEncoderMapper(PasswordEncoder passwordEncoder) {
         this.passwordEncoder = passwordEncoder;

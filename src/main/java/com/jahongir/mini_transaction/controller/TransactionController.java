@@ -30,6 +30,4 @@ public class TransactionController extends ApiController<TransactionService> {
     public ResponseEntity<UUID> hold(@RequestBody ConfirmRequest confirmRequest) {
         return null;
     }
-
-
 }

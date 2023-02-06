@@ -13,4 +13,5 @@ import lombok.*;
 @Getter
 @Setter
 public class CardCreateDTO implements Dto {
+
 }

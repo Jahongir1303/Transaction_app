@@ -16,24 +16,18 @@ import com.jahongir.mini_transaction.security.jwt.JwtUtils;
 import com.jahongir.mini_transaction.service.base.AbstractService;
 import com.jahongir.mini_transaction.service.base.GenericCreateService;
 import jakarta.transaction.Transactional;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Collection;
-import java.util.Locale;
 import java.util.UUID;
 
 /**
@@ -43,16 +37,18 @@ import java.util.UUID;
  */
 @Service
 public class UserDetailsServiceImpl extends AbstractService<UserRepository, UserMapper> implements UserDetailsService, GenericCreateService<UUID, RegisterRequest> {
-    @Autowired
-    @Lazy
-    private AuthenticationManager authenticationManager;
-    @Autowired
-    private JwtUtils jwtUtils;
-    @Autowired
-    RefreshTokenService refreshTokenService;
 
-    public UserDetailsServiceImpl(UserRepository repository, UserMapper userMapper) {
+    private final AuthenticationManager authenticationManager;
+
+    private final JwtUtils jwtUtils;
+
+    private final RefreshTokenService refreshTokenService;
+
+    public UserDetailsServiceImpl(UserRepository repository, UserMapper userMapper, @Lazy AuthenticationManager authenticationManager, JwtUtils jwtUtils, RefreshTokenService refreshTokenService) {
         super(repository, userMapper);
+        this.authenticationManager = authenticationManager;
+        this.jwtUtils = jwtUtils;
+        this.refreshTokenService = refreshTokenService;
     }
 
 
@@ -98,7 +94,7 @@ public class UserDetailsServiceImpl extends AbstractService<UserRepository, User
         return user.getId();
     }
 
-    public void deleteUserByPhoneNumber(String phoneNumber) {
+    public String deleteUserByPhoneNumber(String phoneNumber) {
         SecurityContext context = SecurityContextHolder.getContext();
         Authentication authentication = context.getAuthentication();
         UserDetailsImpl principal = (UserDetailsImpl) authentication.getPrincipal();
@@ -113,5 +109,6 @@ public class UserDetailsServiceImpl extends AbstractService<UserRepository, User
                 .build();
 
         repository.save(user);
+        return "Successfully deleted";
     }
 }
