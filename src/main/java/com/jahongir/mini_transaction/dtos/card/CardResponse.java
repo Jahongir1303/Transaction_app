@@ -3,6 +3,8 @@ package com.jahongir.mini_transaction.dtos.card;
 import com.jahongir.mini_transaction.enums.CardType;
 import lombok.*;
 
+import java.math.BigDecimal;
+
 /**
  * @author jahongir
  * @created 05/02/23 - 15:55
@@ -11,7 +13,7 @@ import lombok.*;
 @Getter
 @Setter
 public class CardResponse {
-    private Long balance;
+    private BigDecimal balance;
     private String name;
     private String cardNumber;
     private CardType type;

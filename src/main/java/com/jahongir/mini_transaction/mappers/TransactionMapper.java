@@ -1,5 +1,7 @@
 package com.jahongir.mini_transaction.mappers;
 
+import com.jahongir.mini_transaction.domains.Transaction;
+import com.jahongir.mini_transaction.dtos.transaction.HoldRequest;
 import org.mapstruct.Mapper;
 
 /**
@@ -8,6 +10,6 @@ import org.mapstruct.Mapper;
  * @project Mini_transaction/IntelliJ IDEA
  */
 @Mapper(componentModel = "spring")
-public interface TransactionMapper extends BaseMapper{
-
+public interface TransactionMapper extends BaseMapper {
+    Transaction fromDto(HoldRequest holdRequest);
 }

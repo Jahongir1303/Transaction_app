@@ -11,11 +11,13 @@ import com.jahongir.mini_transaction.repository.CardRepository;
 import com.jahongir.mini_transaction.security.UserDetailsImpl;
 import com.jahongir.mini_transaction.service.base.AbstractService;
 import com.jahongir.mini_transaction.service.base.GenericCreateService;
+import com.jahongir.mini_transaction.utils.TransactionConstants;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.*;
 
 /**
@@ -36,7 +38,10 @@ public class CardService extends AbstractService<CardRepository, CardMapper> imp
         if (exists) {
             throw new GenericRunTimeException("Card with such card number has already been added", HttpStatus.BAD_REQUEST.value());
         }
+
+        Long tiyinOrCent = cardAddRequest.getBalance().multiply(TransactionConstants.CONVERSIONNUM).longValue();
         Card card = mapper.fromCreateDto(cardAddRequest);
+        card.setBalance(tiyinOrCent);
         String typeDetection = card.getCardNumber();
         if (typeDetection.startsWith("9860")) {
             card.setType(CardType.HUMO);

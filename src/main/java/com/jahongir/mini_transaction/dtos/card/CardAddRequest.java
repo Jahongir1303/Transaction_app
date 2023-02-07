@@ -4,6 +4,8 @@ import com.jahongir.mini_transaction.dtos.base.Dto;
 import jakarta.validation.constraints.*;
 import lombok.*;
 
+import java.math.BigDecimal;
+
 /**
  * @author jahongir
  * @created 05/02/23 - 15:50
@@ -12,9 +14,10 @@ import lombok.*;
 @Getter
 @Setter
 public class CardAddRequest implements Dto {
-    @NotNull(message = "Balance can not be null")
-    @Min(value = 0, message = "Balance must be at least 0")
-    private Long balance;
+    @NotNull
+    @DecimalMin(value = "0.0", inclusive = false)
+    @Digits(integer = 12, fraction = 2, message = "Wrong format is entered")
+    private BigDecimal balance;
     @NotBlank(message = "Name can not be empty or null")
     @Size(max = 255, message = "Field size should not be grater than 255 in length")
     private String name;
