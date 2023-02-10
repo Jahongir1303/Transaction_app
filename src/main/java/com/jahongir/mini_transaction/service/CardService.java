@@ -29,6 +29,7 @@ import java.util.UUID;
  */
 @Service
 public class CardService extends AbstractService<CardRepository, CardMapper> implements GenericCreateService<Long, CardAddRequest> {
+
     private final CurrentUser currentUser;
 
     public CardService(CardRepository repository, CardMapper cardMapper, CurrentUser currentUser) {
@@ -38,6 +39,7 @@ public class CardService extends AbstractService<CardRepository, CardMapper> imp
 
     @Override
     public Long create(CardAddRequest cardAddRequest) {
+        System.out.println("dfsgdfs");
         String cardNumber = cardAddRequest.getCardNumber();
         Boolean exists = repository.existsByCardNumber(cardNumber);
         if (exists) {
