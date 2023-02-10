@@ -9,6 +9,5 @@ import java.math.BigDecimal;
  */
 
 public interface TransactionConstants {
-    Long UZSTOUSD = 113L;
     BigDecimal CONVERSIONNUM = BigDecimal.valueOf(100);
 }

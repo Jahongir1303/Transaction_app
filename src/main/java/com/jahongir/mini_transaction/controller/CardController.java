@@ -3,6 +3,8 @@ package com.jahongir.mini_transaction.controller;
 import com.jahongir.mini_transaction.dtos.card.CardAddRequest;
 import com.jahongir.mini_transaction.dtos.card.CardResponse;
 import com.jahongir.mini_transaction.service.CardService;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

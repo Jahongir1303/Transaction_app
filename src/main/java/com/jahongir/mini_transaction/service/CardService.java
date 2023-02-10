@@ -1,24 +1,26 @@
 package com.jahongir.mini_transaction.service;
 
 import com.jahongir.mini_transaction.domains.Card;
+import com.jahongir.mini_transaction.domains.User;
 import com.jahongir.mini_transaction.dtos.card.CardAddRequest;
 import com.jahongir.mini_transaction.dtos.card.CardResponse;
 import com.jahongir.mini_transaction.enums.CardType;
 import com.jahongir.mini_transaction.enums.CurrencyType;
+import com.jahongir.mini_transaction.exceptions.GenericNotFoundException;
 import com.jahongir.mini_transaction.exceptions.GenericRunTimeException;
 import com.jahongir.mini_transaction.mappers.CardMapper;
 import com.jahongir.mini_transaction.repository.CardRepository;
-import com.jahongir.mini_transaction.security.UserDetailsImpl;
+import com.jahongir.mini_transaction.security.CurrentUser;
 import com.jahongir.mini_transaction.service.base.AbstractService;
 import com.jahongir.mini_transaction.service.base.GenericCreateService;
 import com.jahongir.mini_transaction.utils.TransactionConstants;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
-import java.util.*;
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 /**
  * @author jahongir
@@ -27,8 +29,11 @@ import java.util.*;
  */
 @Service
 public class CardService extends AbstractService<CardRepository, CardMapper> implements GenericCreateService<Long, CardAddRequest> {
-    public CardService(CardRepository repository, CardMapper cardMapper) {
+    private final CurrentUser currentUser;
+
+    public CardService(CardRepository repository, CardMapper cardMapper, CurrentUser currentUser) {
         super(repository, cardMapper);
+        this.currentUser = currentUser;
     }
 
     @Override
@@ -36,7 +41,7 @@ public class CardService extends AbstractService<CardRepository, CardMapper> imp
         String cardNumber = cardAddRequest.getCardNumber();
         Boolean exists = repository.existsByCardNumber(cardNumber);
         if (exists) {
-            throw new GenericRunTimeException("Card with such card number has already been added", HttpStatus.BAD_REQUEST.value());
+            throw new GenericRunTimeException("Card with such card number has already been added", HttpStatus.BAD_REQUEST);
         }
 
         Long tiyinOrCent = cardAddRequest.getBalance().multiply(TransactionConstants.CONVERSIONNUM).longValue();
@@ -50,12 +55,12 @@ public class CardService extends AbstractService<CardRepository, CardMapper> imp
             card.setType(CardType.VISA);
             card.setCurrency(CurrencyType.USD);
         } else {
-            throw new GenericRunTimeException("Wrong card number has been added", HttpStatus.BAD_REQUEST.value());
+            throw new GenericRunTimeException("Wrong card number has been added", HttpStatus.BAD_REQUEST);
         }
 
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        UserDetailsImpl principal = (UserDetailsImpl) authentication.getPrincipal();
-        card.setUser(principal.getUser());
+        User currentUser = this.currentUser.getCurrentUser();
+        card.setUser(currentUser);
+
         repository.save(card);
         return card.getId();
     }
@@ -79,8 +84,18 @@ public class CardService extends AbstractService<CardRepository, CardMapper> imp
 
             cardResponse = mapper.toInfoDto(card);
         } else {
-            return null;
+            throw new GenericNotFoundException("Thres is not any card with such card id on database", HttpStatus.NOT_FOUND);
         }
         return cardResponse;
+    }
+
+    public Card getCardById(Long id) {
+        Optional<Card> optionalCard = repository.findById(id);
+
+        if (optionalCard.isEmpty()) {
+            throw new GenericRunTimeException("There is not any card with given card id", HttpStatus.BAD_REQUEST);
+        }
+
+        return optionalCard.get();
     }
 }

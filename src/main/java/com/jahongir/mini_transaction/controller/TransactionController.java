@@ -4,7 +4,9 @@ import com.jahongir.mini_transaction.dtos.transaction.ConfirmResponse;
 import com.jahongir.mini_transaction.dtos.transaction.HoldRequest;
 import com.jahongir.mini_transaction.service.TransactionService;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -30,9 +32,9 @@ public class TransactionController extends ApiController<TransactionService> {
         return ResponseEntity.ok(transactionId);
     }
 
-    @PostMapping(API + V1 + "/transaction/confirm")
-    public ResponseEntity<ConfirmResponse> confirm(@PathVariable @NotNull UUID transactionId) {
-        service.confirm(transactionId);
-        return null;
+    @PostMapping(API + V1 + "/transaction/confirm/{transactionId}")
+    public ResponseEntity<ConfirmResponse> confirm(@PathVariable @NotBlank UUID transactionId) {
+        ConfirmResponse confirmResponse = service.confirm(transactionId);
+        return ResponseEntity.status(HttpStatus.CREATED.value()).body(confirmResponse);
     }
 }

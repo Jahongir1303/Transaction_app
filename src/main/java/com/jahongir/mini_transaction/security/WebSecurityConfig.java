@@ -23,6 +23,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
  * @project Mini_transaction/IntelliJ IDEA
  */
 @Configuration
+@EnableWebSecurity
 public class WebSecurityConfig {
 
     private final UserDetailsServiceImpl userDetailsService;

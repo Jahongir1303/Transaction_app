@@ -1,6 +1,7 @@
 package com.jahongir.mini_transaction.exceptions;
 
 import lombok.Getter;
+import org.springframework.http.HttpStatus;
 
 /**
  * @author jahongir
@@ -9,9 +10,10 @@ import lombok.Getter;
  */
 @Getter
 public class GenericRunTimeException extends RuntimeException {
-    protected final Integer statusCode;
-    public GenericRunTimeException(String message, Integer statusCode) {
+    protected final HttpStatus status;
+
+    public GenericRunTimeException(String message, HttpStatus status) {
         super(message);
-        this.statusCode = statusCode;
+        this.status = status;
     }
 }

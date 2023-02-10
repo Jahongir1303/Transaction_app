@@ -33,7 +33,8 @@ public class Transaction {
     private Long receiverAmount;
     @Enumerated(EnumType.STRING)
     @Column(length = 10)
-    private TransactionStat status;
+    @Builder.Default
+    private TransactionStat status = TransactionStat.NEW;
     @Column(nullable = false)
     @Builder.Default
     private Long time = System.currentTimeMillis();

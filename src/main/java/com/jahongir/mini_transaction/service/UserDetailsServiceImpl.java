@@ -82,12 +82,12 @@ public class UserDetailsServiceImpl extends AbstractService<UserRepository, User
     public UUID create(RegisterRequest registerRequest) {
         if (!registerRequest.getPassword().equals(registerRequest.getPasswordConfirm())) {
             throw new GenericRunTimeException("Error: Password are not the same" + registerRequest.getPhoneNumber(),
-                    HttpStatus.BAD_REQUEST.value());
+                    HttpStatus.BAD_REQUEST);
         }
 
         if (repository.existsByPhoneNumber(registerRequest.getPhoneNumber())) {
             throw new GenericRunTimeException("Error: User has already exists with phone number: " + registerRequest.getPhoneNumber(),
-                    HttpStatus.BAD_REQUEST.value());
+                    HttpStatus.BAD_REQUEST);
         }
 
         User user = mapper.fromCreateDto(registerRequest);
@@ -102,7 +102,7 @@ public class UserDetailsServiceImpl extends AbstractService<UserRepository, User
         Authentication authentication = context.getAuthentication();
         UserDetailsImpl principal = (UserDetailsImpl) authentication.getPrincipal();
         if (!principal.getUsername().equals(phoneNumber)) {
-            throw new GenericRunTimeException("Wrong phone number!", HttpStatus.BAD_REQUEST.value());
+            throw new GenericRunTimeException("Wrong phone number!", HttpStatus.BAD_REQUEST);
         }
         User user = User.builder()
                 .id(principal.getUser().getId())

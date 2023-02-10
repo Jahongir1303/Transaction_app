@@ -1,8 +1,15 @@
 package com.jahongir.mini_transaction.mappers;
 
 import com.jahongir.mini_transaction.domains.Transaction;
+import com.jahongir.mini_transaction.dtos.transaction.ConfirmResponse;
 import com.jahongir.mini_transaction.dtos.transaction.HoldRequest;
+import com.jahongir.mini_transaction.utils.TransactionConstants;
+import jakarta.transaction.Transactional;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.Named;
+
+import java.math.BigDecimal;
 
 /**
  * @author jahongir
@@ -11,5 +18,5 @@ import org.mapstruct.Mapper;
  */
 @Mapper(componentModel = "spring")
 public interface TransactionMapper extends BaseMapper {
-    Transaction fromDto(HoldRequest holdRequest);
+    ConfirmResponse fromDto(Transaction transaction);
 }
