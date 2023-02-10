@@ -81,16 +81,15 @@ public class TransactionService extends AbstractService<TransactionRepository, T
         return transactionId;
     }
 
-    public ConfirmResponse confirm(UUID transactionId) throws GenericNotFoundException {
+    public synchronized ConfirmResponse confirm(UUID transactionId) throws GenericNotFoundException {
         Transaction transaction = findById(transactionId);
 
         Long senderCardId = transaction.getSenderCardId();
         Card senderCard = cardService.getCardById(senderCardId);
-        System.out.println("senderCard.toString() = " + senderCard.getCardNumber());
 
         Long receiverCardId = transaction.getReceiverCardId();
         Card receiverCard = cardService.getCardById(receiverCardId);
-        System.out.println("receiverCard.toString() = " + receiverCard.getCardNumber());
+
         Long senderAmount = transaction.getSenderAmount();
 
         Long senderCardBalance = senderCard.getBalance();
@@ -109,7 +108,7 @@ public class TransactionService extends AbstractService<TransactionRepository, T
             transaction.setStatus(TransactionStat.SUCCESS);
             repository.save(transaction);
         }
-        System.out.println("transaction = " + transaction.getStatus());
+
         return mapper.fromDto(transaction);
     }
 

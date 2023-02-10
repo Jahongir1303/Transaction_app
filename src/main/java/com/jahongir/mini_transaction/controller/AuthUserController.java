@@ -22,6 +22,7 @@ import java.util.UUID;
  * @project Mini_transaction/IntelliJ IDEA
  */
 @RestController
+//@CrossOrigin(origins = "*", maxAge = 3600)
 public class AuthUserController extends ApiController<UserDetailsServiceImpl> {
 
     private final RefreshTokenService refreshTokenService;
